@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FavoriteIndex" representedClassName="FavoriteIndex" syncable="YES">
+        <attribute name="index" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="FavoriteList" representedClassName="FavoriteList" syncable="YES">
+        <attribute name="albumCoverUrl" optional="YES" attributeType="String"/>
+        <attribute name="albumName" optional="YES" attributeType="String"/>
+        <attribute name="artistName" optional="YES" attributeType="String"/>
+        <attribute name="favoriteStatus" optional="YES" attributeType="Integer 32" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="FavoriteList" positionX="-54" positionY="-9" width="128" height="89"/>
+        <element name="FavoriteIndex" positionX="-54" positionY="18" width="128" height="44"/>
+    </elements>
+</model>
