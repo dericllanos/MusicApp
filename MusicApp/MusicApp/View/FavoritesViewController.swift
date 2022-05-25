@@ -37,7 +37,7 @@ class FavoritesViewController: UIViewController {
         self.initializeData()
     }
     
-    fileprivate func initializeData() {
+    private func initializeData() {
         self.setupUI()
         
         self.songsViewModel.bind { [weak self] in
