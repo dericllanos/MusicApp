@@ -92,6 +92,7 @@ class DetailsViewController: UIViewController {
             self.songsViewModel.removeFavorite(name: self.ArtistName.text ?? "Unknown")
             self.songsViewModel.removeIndex(index: indexed)
         }
+        print(self.songsViewModel.getAllIndex)
     }
     
     private func setBtnValue() {

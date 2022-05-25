@@ -16,7 +16,7 @@ extension FavoriteIndex {
         return NSFetchRequest<FavoriteIndex>(entityName: "FavoriteIndex")
     }
 
-    @NSManaged public var index: Int32
+    @NSManaged public var faveIndex: Int32
 
 }
 

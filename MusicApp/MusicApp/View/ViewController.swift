@@ -35,7 +35,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Top-50"
-        self.setupUI()
         self.initializeData()
     }
     
@@ -44,18 +43,14 @@ class ViewController: UIViewController {
         self.initializeData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.initializeData()
-    }
-    
     private func initializeData() {
+        self.setupUI()
+        
         self.songsViewModel.bind { [weak self] in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
         }
-//        self.songsViewModel.deleteAll()
         self.songsViewModel.getSongs()
     }
 
@@ -98,6 +93,7 @@ extension ViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reuseID, for: indexPath) as? TableViewCell else {
             return UITableViewCell()
         }
+        
         cell.AlbumName.text = self.songsViewModel.albumName(index: indexPath.row) ?? "Unknown"
         cell.ArtistName.text = self.songsViewModel.artistName(index: indexPath.row) ?? "Mysterious"
         
@@ -131,6 +127,7 @@ extension ViewController: UITableViewDataSource {
                 self.songsViewModel.removeFavorite(name: self.songsViewModel.artistName(index: indexPath.row) ?? "Unknown")
                 self.songsViewModel.removeIndex(index: indexPath.row)
             }
+            print(self.songsViewModel.getAllIndex)
             self.tableView.reloadData()
         }
         

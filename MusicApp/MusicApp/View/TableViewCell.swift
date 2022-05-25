@@ -41,9 +41,14 @@ class TableViewCell: UITableViewCell {
     lazy var FavoriteButton: UIButton = {
         let btn = UIButton(type: .custom)
         btn.translatesAutoresizingMaskIntoConstraints = false
+        
         if buttonStatus == 0 {
             btn.setImage(UIImage(systemName: "heart"), for: .normal)
         }
+        else {
+            btn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }
+        
         btn.contentVerticalAlignment = .fill
         btn.contentHorizontalAlignment = .fill
         btn.layer.cornerRadius = 5.0
@@ -67,13 +72,6 @@ class TableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        if buttonStatus == 0 {
-            self.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
-        }
-        else {
-            self.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        }
-        
         let vStack = UIStackView(frame: .zero)
         vStack.translatesAutoresizingMaskIntoConstraints = false
         vStack.axis = .vertical

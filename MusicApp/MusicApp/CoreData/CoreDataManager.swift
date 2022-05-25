@@ -141,7 +141,7 @@ class CoreDataManager {
             for index in 0...results.count - 1 {
                 if name == (results[index].artistName ?? "") {
                     let favorited = results[index]
-                    print ("deleting... " + (favorited.artistName ?? "nothing"))
+                    print ("deleting... " + (favorited.albumName ?? "nothing"))
                     context.delete(favorited)
                     self.saveContext()
                 }
@@ -173,7 +173,7 @@ class CoreDataManager {
         do {
             let results = try context.fetch(request)
             for count in 0...results.count - 1 {
-                if (index == results[count].index) {
+                if (index == results[count].faveIndex) {
                     let favorited = results[count]
                     context.delete(favorited)
                     self.saveContext()
@@ -188,7 +188,7 @@ class CoreDataManager {
         let context = self.persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(forEntityName: "FavoriteIndex", in: context) else { return nil }
         let favorited = FavoriteIndex(entity: entity, insertInto: context)
-        favorited.index = Int32(index)
+        favorited.faveIndex = Int32(index)
         return favorited
     }
 
@@ -197,7 +197,7 @@ class CoreDataManager {
         let request: NSFetchRequest<FavoriteIndex> = FavoriteIndex.fetchRequest()
         do {
             let indices = try context.fetch(request)
-            return indices.map({Int($0.index)})
+            return indices.map({Int($0.faveIndex)})
         } catch {
             print("Unable to Fetch (\(error))")
         }

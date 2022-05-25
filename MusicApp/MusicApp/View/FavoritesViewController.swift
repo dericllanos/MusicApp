@@ -29,7 +29,6 @@ class FavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Favorites"
-        self.setupUI()
         self.initializeData()
     }
     
@@ -38,12 +37,9 @@ class FavoritesViewController: UIViewController {
         self.initializeData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.initializeData()
-    }
-    
-    private func initializeData() {
+    fileprivate func initializeData() {
+        self.setupUI()
+        
         self.songsViewModel.bind { [weak self] in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
@@ -69,9 +65,10 @@ extension FavoritesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let dc = DetailsViewController()
         
-        dc.self.AlbumName.text = self.songsViewModel.albumName(index: self.songsViewModel.getAllIndex[indexPath.row])
-        dc.self.ArtistName.text = self.songsViewModel.artistName(index: self.songsViewModel.getAllIndex[indexPath.row])
+        dc.self.AlbumName.text = self.songsViewModel.albumName(index: self.songsViewModel.getAllIndex[indexPath.row]) ?? ""
+        dc.self.ArtistName.text = self.songsViewModel.artistName(index: self.songsViewModel.getAllIndex[indexPath.row]) ?? ""
         dc.self.buttonStatus = self.songsViewModel.faveClicked(index: self.songsViewModel.getAllIndex[indexPath.row])
+        dc.self.FavoriteButton.isEnabled = false
         
         dc.self.AlbumCover.image = UIImage(named: "missing")
         self.songsViewModel.imageData(index: self.songsViewModel.getAllIndex[indexPath.row]) { data in
@@ -83,25 +80,26 @@ extension FavoritesViewController: UITableViewDelegate {
         }
         
         dc.songsViewModel = self.songsViewModel as SongsViewModel
-        dc.indexed = indexPath.row
+        dc.indexed = self.songsViewModel.getAllIndex[indexPath.row]
         self.navigationController?.pushViewController(dc, animated: true)
     }
 }
 
 extension FavoritesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("\(self.favorites.count)")
         return self.favorites.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.reuseID, for: indexPath) as? FavoritesTableViewCell else { return UITableViewCell() }
+        
         cell.AlbumName.text = self.albumNames[indexPath.row]
         cell.ArtistName.text = self.artistNames[indexPath.row]
         
         if (self.songsViewModel.faveClicked(index: self.songsViewModel.getAllIndex[indexPath.row]) == 0) {
             cell.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
-            
         else {
             cell.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         }
@@ -117,7 +115,6 @@ extension FavoritesViewController: UITableViewDataSource {
                 self.songsViewModel.changeButtonStatus(index: self.favorites[indexPath.row])
                 self.songsViewModel.removeFavorite(name: self.songsViewModel.artistName(index: self.songsViewModel.getAllIndex[indexPath.row]) ?? "Unknown")
             }
-            self.tableView.reloadData()
         }
 
         cell.AlbumCover.image = UIImage(named: "missing")

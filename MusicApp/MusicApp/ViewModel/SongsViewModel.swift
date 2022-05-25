@@ -116,7 +116,6 @@ class SongsViewModel: SongsViewModelType {
     func removeIndex(index: Int) {
         self.coreDataManager.removeIndex(index: index)
         self.coreDataManager.saveContext()
-        print("index removed")
     }
     
     func addIndex(index: Int) {
@@ -184,7 +183,7 @@ class SongsViewModel: SongsViewModelType {
     func makeFavorited(index: Int) {
         let favAlbum = self.songs[index]
         self.favorited = self.coreDataManager.makeFavorite(favAlbum: favAlbum)
-        print ("adding " + favAlbum.artistName)
+        print ("adding... " + favAlbum.name)
         self.coreDataManager.saveContext()
     }
     
