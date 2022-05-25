@@ -134,19 +134,18 @@ class CoreDataManager {
     
     func removeFavorite(name: String) {
         let context = self.persistentContainer.viewContext
-        
         let request: NSFetchRequest<FavoriteList> = FavoriteList.fetchRequest()
         
         do {
             let results = try context.fetch(request)
-                for index in 0...results.count - 1 {
-                    if name == "Artist: " + (results[index].artistName ?? "") {
-                        let favorited = results[index]
-                        print ("deleting... " + (favorited.artistName ?? "nothing"))
-                        context.delete(favorited)
-                        self.saveContext()
-                    }
+            for index in 0...results.count - 1 {
+                if name == (results[index].artistName ?? "") {
+                    let favorited = results[index]
+                    print ("deleting... " + (favorited.artistName ?? "nothing"))
+                    context.delete(favorited)
+                    self.saveContext()
                 }
+            }
         } catch {
             print(error)
         }
@@ -173,13 +172,13 @@ class CoreDataManager {
 
         do {
             let results = try context.fetch(request)
-                for count in 0...results.count - 1 {
-                    if (index == results[count].index) {
-                        let favorited = results[count]
-                        context.delete(favorited)
-                        self.saveContext()
-                    }
+            for count in 0...results.count - 1 {
+                if (index == results[count].index) {
+                    let favorited = results[count]
+                    context.delete(favorited)
+                    self.saveContext()
                 }
+            }
         } catch {
             print(error)
         }
@@ -196,12 +195,12 @@ class CoreDataManager {
     func getAllIndex() -> [Int]? {
         let context = self.persistentContainer.viewContext
         let request: NSFetchRequest<FavoriteIndex> = FavoriteIndex.fetchRequest()
-          do {
+        do {
             let indices = try context.fetch(request)
-              return indices.map({Int($0.index)})
-          } catch {
+            return indices.map({Int($0.index)})
+        } catch {
             print("Unable to Fetch (\(error))")
-          }
-          return []
+        }
+        return []
     }
 }

@@ -55,7 +55,7 @@ class ViewController: UIViewController {
                 self?.tableView.reloadData()
             }
         }
-        //self.songsViewModel.deleteAll()
+//        self.songsViewModel.deleteAll()
         self.songsViewModel.getSongs()
     }
 
@@ -70,11 +70,11 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let dc = DetailsViewController()
+        
         dc.self.AlbumCover.image = UIImage(named: "missing")
         self.songsViewModel.imageData(index: indexPath.row) { data in
             if let data = data {
                 DispatchQueue.main.async {
-                    print("Data Returned for Image")
                     dc.AlbumCover.image = UIImage(data: data)
                 }
             }
@@ -86,7 +86,6 @@ extension ViewController: UITableViewDelegate {
         dc.indexed = indexPath.row
         
         self.navigationController?.pushViewController(dc, animated: true)
-        print("cell clicked")
     }
 }
 
@@ -106,13 +105,12 @@ extension ViewController: UITableViewDataSource {
         self.songsViewModel.imageData(index: indexPath.row) { data in
             if let data = data {
                 DispatchQueue.main.async {
-                    print("Data Returned for Image")
                     cell.AlbumCover.image = UIImage(data: data)
                 }
             }
         }
         
-        if (self.songsViewModel.faveClicked(index: indexPath.row) == 0){
+        if (self.songsViewModel.faveClicked(index: indexPath.row) == 0) {
             cell.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
             
@@ -121,21 +119,18 @@ extension ViewController: UITableViewDataSource {
         }
         
         cell.buttonClickedAction = { [] in
-            var hasChanged = 0
-            if (self.songsViewModel.faveClicked(index: indexPath.row) == 0){
-                cell.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            if (self.songsViewModel.faveClicked(index: indexPath.row) == 0) {
+                cell.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
                 self.songsViewModel.changeButtonStatus(index: indexPath.row)
-                hasChanged += 1
                 self.songsViewModel.makeFavorited(index: indexPath.row)
                 self.songsViewModel.addIndex(index: indexPath.row)
             }
-            if (self.songsViewModel.faveClicked(index: indexPath.row) == 1 && hasChanged == 0) {
-                cell.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            else {
+                cell.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
                 self.songsViewModel.changeButtonStatus(index: indexPath.row)
-                self.songsViewModel.removeFavorite(name: self.songsViewModel.artistName(index: indexPath.row) ?? "")
+                self.songsViewModel.removeFavorite(name: self.songsViewModel.artistName(index: indexPath.row) ?? "Unknown")
                 self.songsViewModel.removeIndex(index: indexPath.row)
             }
-            print("reload")
             self.tableView.reloadData()
         }
         

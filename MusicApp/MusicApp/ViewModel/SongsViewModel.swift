@@ -116,6 +116,7 @@ class SongsViewModel: SongsViewModelType {
     func removeIndex(index: Int) {
         self.coreDataManager.removeIndex(index: index)
         self.coreDataManager.saveContext()
+        print("index removed")
     }
     
     func addIndex(index: Int) {
@@ -208,19 +209,19 @@ class SongsViewModel: SongsViewModelType {
         return displayText
     }
     
-    func allAlbumNames() -> [String]{
+    func allAlbumNames() -> [String] {
         self.coreDataManager.allAlbumNames()
     }
     
-    func allArtistNames() -> [String]{
+    func allArtistNames() -> [String] {
         self.coreDataManager.allArtistNames()
     }
     
-    func allButtonStatus() -> [Int]{
+    func allButtonStatus() -> [Int] {
         self.coreDataManager.allButtonStatus()
     }
     
-    func removeFavorite(name: String){
+    func removeFavorite(name: String) {
         self.coreDataManager.removeFavorite(name: name)
     }
 }

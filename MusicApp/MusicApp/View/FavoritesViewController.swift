@@ -95,34 +95,28 @@ extension FavoritesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.reuseID, for: indexPath) as? FavoritesTableViewCell else { return UITableViewCell() }
-        
         cell.AlbumName.text = self.albumNames[indexPath.row]
         cell.ArtistName.text = self.artistNames[indexPath.row]
         
-        if (self.songsViewModel.faveClicked(index: indexPath.row) == 0){
+        if (self.songsViewModel.faveClicked(index: self.songsViewModel.getAllIndex[indexPath.row]) == 0) {
             cell.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
             
-        if (self.songsViewModel.faveClicked(index: indexPath.row) == 1) {
+        else {
             cell.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         }
         
         cell.buttonClickedAction = { [] in
-            var hasChanged = 0
-            if (self.songsViewModel.faveClicked(index: indexPath.row) == 0) {
-                cell.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
-                self.songsViewModel.changeButtonStatus(index: indexPath.row)
-                hasChanged += 1
-                self.songsViewModel.makeFavorited(index: indexPath.row)
-                self.songsViewModel.addIndex(index: indexPath.row)
-            }
-            if (self.songsViewModel.faveClicked(index: indexPath.row) == 1 && hasChanged == 0) {
+            if (self.songsViewModel.faveClicked(index: self.songsViewModel.getAllIndex[indexPath.row]) == 0) {
                 cell.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-                self.songsViewModel.changeButtonStatus(index: indexPath.row)
-                self.songsViewModel.removeFavorite(name: self.songsViewModel.artistName(index: indexPath.row) ?? "")
-                self.songsViewModel.removeIndex(index: indexPath.row)
+                self.songsViewModel.changeButtonStatus(index: self.favorites[indexPath.row])
+                self.songsViewModel.makeFavorited(index: self.songsViewModel.getAllIndex[indexPath.row])
             }
-            print("reload")
+            else {
+                cell.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                self.songsViewModel.changeButtonStatus(index: self.favorites[indexPath.row])
+                self.songsViewModel.removeFavorite(name: self.songsViewModel.artistName(index: self.songsViewModel.getAllIndex[indexPath.row]) ?? "Unknown")
+            }
             self.tableView.reloadData()
         }
 

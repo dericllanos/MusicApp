@@ -9,7 +9,6 @@ import UIKit
 
 class DetailsViewController: UIViewController {
     
-    var liked = false
     var buttonStatus = 0
     var indexed = 0
     var songsViewModel = SongsViewModel()
@@ -44,8 +43,11 @@ class DetailsViewController: UIViewController {
     lazy var FavoriteButton: UIButton = {
         let btn = UIButton(type: .custom)
         btn.translatesAutoresizingMaskIntoConstraints = false
-        if liked == false {
+        if buttonStatus == 0 {
             btn.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
+        else {
+            btn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         }
         btn.contentVerticalAlignment = .fill
         btn.contentHorizontalAlignment = .fill
@@ -76,19 +78,19 @@ class DetailsViewController: UIViewController {
     
     @objc
     private func favorite() {
-        var hasChanged = 0
         if (buttonStatus == 0){
             self.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             buttonStatus = 1
-            hasChanged += 1
             self.songsViewModel.changeButtonStatus(index: indexed)
             self.songsViewModel.makeFavorited(index: indexed)
+            self.songsViewModel.addIndex(index: indexed)
         }
-        if (buttonStatus == 1 && hasChanged == 0){
+        else {
             self.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
             buttonStatus = 0
             self.songsViewModel.changeButtonStatus(index: indexed)
             self.songsViewModel.removeFavorite(name: self.ArtistName.text ?? "Unknown")
+            self.songsViewModel.removeIndex(index: indexed)
         }
     }
     

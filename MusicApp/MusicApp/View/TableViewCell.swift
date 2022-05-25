@@ -10,7 +10,7 @@ import UIKit
 class TableViewCell: UITableViewCell {
     static let reuseID = "\(TableViewCell.self)"
     
-    var buttonClickedAction : (() -> ())?
+    var buttonClickedAction: (() -> ())?
     var buttonStatus = 0
     
     lazy var AlbumCover: UIImageView = {
