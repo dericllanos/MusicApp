@@ -113,12 +113,12 @@ class SongsViewModel: SongsViewModelType {
         return self.coreDataManager.getAllIndex() ?? []
     }
     
-    func removeIndex (index: Int) {
+    func removeIndex(index: Int) {
         self.coreDataManager.removeIndex(index: index)
         self.coreDataManager.saveContext()
     }
     
-    func addIndex (index: Int) {
+    func addIndex(index: Int) {
         self.coreDataManager.addIndex(index: index)
         self.coreDataManager.saveContext()
     }

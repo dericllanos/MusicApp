@@ -55,6 +55,7 @@ class ViewController: UIViewController {
                 self?.tableView.reloadData()
             }
         }
+        //self.songsViewModel.deleteAll()
         self.songsViewModel.getSongs()
     }
 
@@ -91,7 +92,7 @@ extension ViewController: UITableViewDelegate {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 50
+        return 50 // self.songsViewModel.count returns infinitely
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -115,25 +116,27 @@ extension ViewController: UITableViewDataSource {
             cell.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
             
-        if (self.songsViewModel.faveClicked(index: indexPath.row) == 1) {
+        else {
             cell.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         }
         
         cell.buttonClickedAction = { [] in
             var hasChanged = 0
             if (self.songsViewModel.faveClicked(index: indexPath.row) == 0){
-                cell.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                cell.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
                 self.songsViewModel.changeButtonStatus(index: indexPath.row)
                 hasChanged += 1
                 self.songsViewModel.makeFavorited(index: indexPath.row)
                 self.songsViewModel.addIndex(index: indexPath.row)
             }
             if (self.songsViewModel.faveClicked(index: indexPath.row) == 1 && hasChanged == 0) {
-                cell.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                cell.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
                 self.songsViewModel.changeButtonStatus(index: indexPath.row)
-                self.songsViewModel.removeFavorite(name: self.songsViewModel.artistName(index: indexPath.row) ?? "Unknown")
+                self.songsViewModel.removeFavorite(name: self.songsViewModel.artistName(index: indexPath.row) ?? "")
                 self.songsViewModel.removeIndex(index: indexPath.row)
             }
+            print("reload")
+            self.tableView.reloadData()
         }
         
         return cell

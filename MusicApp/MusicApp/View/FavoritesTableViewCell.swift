@@ -9,7 +9,7 @@ import UIKit
 
 class FavoritesTableViewCell: UITableViewCell {
     static let reuseID = "\(FavoritesTableViewCell.self)"
-    var liked = false
+
     var buttonClickedAction : (() -> ())?
     var buttonStatus = 0
     
@@ -41,7 +41,7 @@ class FavoritesTableViewCell: UITableViewCell {
     lazy var FavoriteButton: UIButton = {
         let btn = UIButton(type: .custom)
         btn.translatesAutoresizingMaskIntoConstraints = false
-        if liked == false {
+        if buttonStatus == 0 {
             btn.setImage(UIImage(systemName: "heart"), for: .normal)
         }
         btn.contentVerticalAlignment = .fill
@@ -64,15 +64,13 @@ class FavoritesTableViewCell: UITableViewCell {
     @objc
     private func favorite() {
         buttonClickedAction?()
-        self.liked = !liked
         
-        if liked == true {
-            self.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        }
-        else {
+        if buttonStatus == 0 {
             self.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
-        print(liked)
+        else {
+            self.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }
     }
     
     private func setupUI() {
@@ -113,6 +111,11 @@ class FavoritesTableViewCell: UITableViewCell {
         self.AlbumCover.image = UIImage(named: "missing")
         self.AlbumName.text = "Unknown"
         self.ArtistName.text = "Someone Mysterious"
-        self.liked = false
+        if buttonStatus == 0 {
+            self.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
+        else {
+            self.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }
     }
 }

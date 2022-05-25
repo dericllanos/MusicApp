@@ -60,9 +60,7 @@ class CoreDataManager {
                 {
                     try context.execute(deleteRequest)
                     try context.save()
-                }
-                catch
-                {
+                } catch {
                     print ("There was an error")
                 }
     }
@@ -121,7 +119,7 @@ class CoreDataManager {
         return nil
     }
     
-    func getFavoriteCount() -> Int?{
+    func getFavoriteCount() -> Int? {
         let context = self.persistentContainer.viewContext
         let request: NSFetchRequest<FavoriteList> = FavoriteList.fetchRequest()
         
@@ -134,7 +132,7 @@ class CoreDataManager {
         return 0
     }
     
-    func removeFavorite(name: String){
+    func removeFavorite(name: String) {
         let context = self.persistentContainer.viewContext
         
         let request: NSFetchRequest<FavoriteList> = FavoriteList.fetchRequest()
@@ -149,7 +147,6 @@ class CoreDataManager {
                         self.saveContext()
                     }
                 }
-        
         } catch {
             print(error)
         }
@@ -169,7 +166,7 @@ class CoreDataManager {
         }
     }
     
-    func removeIndex(index: Int){
+    func removeIndex(index: Int) {
         let context = self.persistentContainer.viewContext
 
         let request: NSFetchRequest<FavoriteIndex> = FavoriteIndex.fetchRequest()
@@ -188,7 +185,7 @@ class CoreDataManager {
         }
     }
 
-    func addIndex(index: Int) -> FavoriteIndex?{
+    func addIndex(index: Int) -> FavoriteIndex? {
         let context = self.persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(forEntityName: "FavoriteIndex", in: context) else { return nil }
         let favorited = FavoriteIndex(entity: entity, insertInto: context)
@@ -196,7 +193,7 @@ class CoreDataManager {
         return favorited
     }
 
-    func getAllIndex() -> [Int]?{
+    func getAllIndex() -> [Int]? {
         let context = self.persistentContainer.viewContext
         let request: NSFetchRequest<FavoriteIndex> = FavoriteIndex.fetchRequest()
           do {

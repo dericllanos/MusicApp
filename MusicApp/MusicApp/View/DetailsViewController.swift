@@ -76,7 +76,6 @@ class DetailsViewController: UIViewController {
     
     @objc
     private func favorite() {
-        
         var hasChanged = 0
         if (buttonStatus == 0){
             self.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
@@ -91,7 +90,6 @@ class DetailsViewController: UIViewController {
             self.songsViewModel.changeButtonStatus(index: indexed)
             self.songsViewModel.removeFavorite(name: self.ArtistName.text ?? "Unknown")
         }
-        print(liked)
     }
     
     private func setBtnValue() {
