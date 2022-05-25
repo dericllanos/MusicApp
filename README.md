@@ -1,10 +1,12 @@
 # MusicApp
 
 Things to Work on: 
-
-- Removing from CoreData isn't working properly
-    * Adding Works Fine
-- Rows repeat for some reason - I might try emptying the DB 
-    * If you unlike from the details screen, it doesn't remove from CoreData
+- Main ViewController isn't refreshing properly
+- FavoriteButton for Favorites ViewController is displaying unliked for some reason
 - UI adjustments - Thinking of using 'CardSlider' Pod
 - Unit Tests
+
+Fixes: 
+- CoreData working fine now
+- Row Repetition fixed for Favorites
+    * The API returns 100 rows even though only 50 actual songs are available
