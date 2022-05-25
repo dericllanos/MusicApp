@@ -109,7 +109,7 @@ extension FavoritesViewController: UITableViewDataSource {
         
         cell.buttonClickedAction = { [] in
             var hasChanged = 0
-            if (self.songsViewModel.faveClicked(index: indexPath.row) == 0){
+            if (self.songsViewModel.faveClicked(index: indexPath.row) == 0) {
                 cell.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
                 self.songsViewModel.changeButtonStatus(index: indexPath.row)
                 hasChanged += 1

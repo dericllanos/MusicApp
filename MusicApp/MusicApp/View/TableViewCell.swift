@@ -64,15 +64,16 @@ class TableViewCell: UITableViewCell {
     @objc
     private func favorite() {
         buttonClickedAction?()
+    }
+    
+    private func setupUI() {
         if buttonStatus == 0 {
             self.FavoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
         else {
             self.FavoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         }
-    }
-    
-    private func setupUI() {
+        
         let vStack = UIStackView(frame: .zero)
         vStack.translatesAutoresizingMaskIntoConstraints = false
         vStack.axis = .vertical

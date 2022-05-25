@@ -10,7 +10,7 @@
         <attribute name="favoriteStatus" optional="YES" attributeType="Integer 32" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="FavoriteList" positionX="-54" positionY="-9" width="128" height="89"/>
         <element name="FavoriteIndex" positionX="-54" positionY="18" width="128" height="44"/>
+        <element name="FavoriteList" positionX="-54" positionY="-9" width="128" height="89"/>
     </elements>
 </model>
