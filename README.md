@@ -1,7 +1,7 @@
 # MusicApp
 
 Things to Work on: 
-- Main ViewController isn't refreshing properly
+- ViewControllers and TableViews aren't refreshing properly - need to change View for UI to refresh.
 - FavoriteButton for Favorites ViewController is displaying unliked for some reason
 - UI adjustments - Thinking of using 'CardSlider' Pod
 - Unit Tests
