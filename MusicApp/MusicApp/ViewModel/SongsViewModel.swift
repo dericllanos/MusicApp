@@ -25,7 +25,7 @@ protocol SongsViewModelType {
     func allAlbumNames() -> [String]
     func allArtistNames() -> [String]
     func allButtonStatus() -> [Int]
-    func faveClicked(index: Int) -> Int
+    func faveClicked(index: Int) -> Int?
     func changeButtonStatus(index: Int)
     func removeFavorite(name: String)
 }
@@ -161,7 +161,7 @@ class SongsViewModel: SongsViewModelType {
         return self.songs[index].artistName
     }
     
-    func faveClicked(index: Int) -> Int {
+    func faveClicked(index: Int) -> Int? {
         guard index < self.count else { return 0 }
         if (self.songs[index].fav == nil){
             self.songs[index].fav = 0
@@ -177,7 +177,7 @@ class SongsViewModel: SongsViewModelType {
         }
         if(self.songs[index].fav == 0 && x == 0) {
             self.songs[index].fav = 1
-        }
+        } 
     }
     
     func makeFavorited(index: Int) {

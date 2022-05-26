@@ -21,6 +21,7 @@ class FavoritesViewController: UIViewController {
         table.backgroundColor = .systemBlue
         table.delegate = self
         table.dataSource = self
+        table.prefetchDataSource = self
         table.register(FavoritesTableViewCell.self, forCellReuseIdentifier: FavoritesTableViewCell.reuseID)
         
         return table
@@ -34,6 +35,11 @@ class FavoritesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.initializeData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.initializeData()
     }
     
@@ -67,7 +73,7 @@ extension FavoritesViewController: UITableViewDelegate {
         
         dc.self.AlbumName.text = self.songsViewModel.albumName(index: self.songsViewModel.getAllIndex[indexPath.row]) ?? ""
         dc.self.ArtistName.text = self.songsViewModel.artistName(index: self.songsViewModel.getAllIndex[indexPath.row]) ?? ""
-        dc.self.buttonStatus = self.songsViewModel.faveClicked(index: self.songsViewModel.getAllIndex[indexPath.row])
+        dc.self.buttonStatus = 1
         dc.self.FavoriteButton.isEnabled = false
         
         dc.self.AlbumCover.image = UIImage(named: "missing")
@@ -87,7 +93,7 @@ extension FavoritesViewController: UITableViewDelegate {
 
 extension FavoritesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("\(self.favorites.count)")
+        print("loaded")
         return self.favorites.count
     }
     
@@ -115,6 +121,7 @@ extension FavoritesViewController: UITableViewDataSource {
                 self.songsViewModel.changeButtonStatus(index: self.favorites[indexPath.row])
                 self.songsViewModel.removeFavorite(name: self.songsViewModel.artistName(index: self.songsViewModel.getAllIndex[indexPath.row]) ?? "Unknown")
             }
+            self.tableView.reloadData()
         }
 
         cell.AlbumCover.image = UIImage(named: "missing")

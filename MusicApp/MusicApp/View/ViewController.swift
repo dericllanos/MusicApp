@@ -43,6 +43,11 @@ class ViewController: UIViewController {
         self.initializeData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.initializeData()
+    }
+    
     private func initializeData() {
         self.setupUI()
         
@@ -76,7 +81,7 @@ extension ViewController: UITableViewDelegate {
         }
         dc.AlbumName.text = self.songsViewModel.albumName(index: indexPath.row) ?? "Unknown"
         dc.ArtistName.text = self.songsViewModel.artistName(index: indexPath.row) ?? "Mysterious"
-        dc.buttonStatus = self.songsViewModel.faveClicked(index: indexPath.row)
+        dc.buttonStatus = self.songsViewModel.faveClicked(index: indexPath.row) ?? 1
         dc.songsViewModel = self.songsViewModel as? SongsViewModel ?? SongsViewModel()
         dc.indexed = indexPath.row
         
@@ -90,9 +95,8 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reuseID, for: indexPath) as? TableViewCell else {
-            return UITableViewCell()
-        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reuseID, for: indexPath) as? TableViewCell
+        else { return UITableViewCell() }
         
         cell.AlbumName.text = self.songsViewModel.albumName(index: indexPath.row) ?? "Unknown"
         cell.ArtistName.text = self.songsViewModel.artistName(index: indexPath.row) ?? "Mysterious"
@@ -128,7 +132,6 @@ extension ViewController: UITableViewDataSource {
                 self.songsViewModel.removeIndex(index: indexPath.row)
             }
             print(self.songsViewModel.getAllIndex)
-            self.tableView.reloadData()
         }
         
         return cell
